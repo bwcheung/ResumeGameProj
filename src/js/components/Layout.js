@@ -32,10 +32,8 @@ export default class Layout extends React.Component {
 				},
 				guy: null			
 		};
-		this.clouds = [];	
-		this.tickCount = 0;
+		this.clouds = [];
 		this.frameIndex = 0;
-		
 	}
 	
 	handlekeys(value, e) {
@@ -66,13 +64,15 @@ export default class Layout extends React.Component {
 		window.addEventListener('keydown', this.handlekeys.bind(this, true));
 		const ctx = this.refs.canvas.getContext("2d");
 		this.setState({context:ctx});
-		this.createSprite();
-		this.createClouds();
-		requestAnimationFrame(() => {this.update()});
+		this.initialize();
+		requestAnimationFrame(() => {this.update()});	
 	}
+	
 	
 	componentDidUpdate() {
 		this.drawCanvas();
+		this.state.guy.render(this.state);
+		//requestAnimationFrame(() => {this.update()});
 	}
 	
 
@@ -81,8 +81,12 @@ export default class Layout extends React.Component {
 		window.removeEventListener('keydown', this.handlekeys);
 	}
 	
-	update() {
-		requestAnimationFrame(() => {this.update()});
+	initialize() {
+		
+		this.createSprite();
+		this.createClouds();
+		//requestAnimationFrame(() => {this.updateClouds(this.clouds)});
+		//this.updateClouds(this.clouds);
 		this.state.guy.render(this.state);
 	}
 
@@ -129,9 +133,7 @@ export default class Layout extends React.Component {
 			position: this.state.screen.width,
 			speed: 5
 		});
-		this.clouds.push(cloud);
-		//requestAnimationFrame(() => {this.updateClouds(this.clouds)});
-		
+		this.clouds.push(cloud);	
 	}
 	
 	
@@ -139,6 +141,7 @@ export default class Layout extends React.Component {
 		//requestAnimationFrame(() => {this.updateClouds(this.clouds)});
 		//this.drawCanvas();
 		for (let x of clouds) {
+			
 			x.render(this.state);
 			x.position = x.position - x.speed;
 		}

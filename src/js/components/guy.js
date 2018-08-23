@@ -51,7 +51,7 @@ export default class sprite {
     		state.guy.frameIndex = 0;
     	}
     
-  		
+    	//ctx.clearRect(0,0, state.screen.width, state.screen.height);
   
 		newImage.src = this.image;
 		newImage.position = this.position;

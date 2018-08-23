@@ -13,7 +13,7 @@ export default class Clouds {
 		newImage.position = this.position;
 		
 		newImage.onload = function () {
-			  //ctx.drawImage(newImage,this.position,100,50,50);
+			  ctx.drawImage(newImage,this.position,100,50,50);
 			  
 		 };
 		ctx.restore();
