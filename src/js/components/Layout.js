@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
 import Clouds from "./clouds";
-import sprite from "./guy"
+import sprite from "./guy";
+import {drawCanvas} from "./animationFPS.js";
 
 const KEY = {
 		A: 65,
@@ -65,14 +66,11 @@ export default class Layout extends React.Component {
 		const ctx = this.refs.canvas.getContext("2d");
 		this.setState({context:ctx});
 		this.initialize();
-		requestAnimationFrame(() => {this.update()});	
 	}
 	
 	
 	componentDidUpdate() {
-		this.drawCanvas();
 		this.state.guy.render(this.state);
-		//requestAnimationFrame(() => {this.update()});
 	}
 	
 
@@ -85,15 +83,18 @@ export default class Layout extends React.Component {
 		
 		this.createSprite();
 		this.createClouds();
+		
+		const ctx = this.refs.canvas.getContext("2d");
+		drawCanvas(ctx, this.state);
 		//requestAnimationFrame(() => {this.updateClouds(this.clouds)});
 		//this.updateClouds(this.clouds);
-		this.state.guy.render(this.state);
+		//this.state.guy.render(this.state);
 	}
 
 	drawCanvas() {
 		
-		const ctx = this.state.context;
-		
+		//const ctx = this.state.context;
+		const ctx = this.refs.canvas.getContext("2d");
 		ctx.save();
 		
 		ctx.canvas.width = this.state.screen.width;
@@ -138,7 +139,8 @@ export default class Layout extends React.Component {
 	
 	
 	updateClouds(clouds) {
-		//requestAnimationFrame(() => {this.updateClouds(this.clouds)});
+		requestAnimationFrame(() => {this.updateClouds(this.clouds)});
+		
 		//this.drawCanvas();
 		for (let x of clouds) {
 			

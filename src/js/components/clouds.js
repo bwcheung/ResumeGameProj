@@ -1,3 +1,5 @@
+import {drawCanvas} from "./animationFPS.js";
+
 export default class Clouds {
 	constructor(args) {
 		this.position = args.position;
@@ -7,8 +9,9 @@ export default class Clouds {
 	render(state) {
 		var newImage = new Image();
 		const ctx = state.context;
-		ctx.save();
-		//ctx.clearRect(0,0, state.screen.width, state.screen.height);
+		
+		//ctx.clearRect(this.position,100, 50, 50);
+		//drawCanvas(ctx, state);
 		newImage.src = "./images/cloud2.png";
 		newImage.position = this.position;
 		
@@ -16,6 +19,6 @@ export default class Clouds {
 			  ctx.drawImage(newImage,this.position,100,50,50);
 			  
 		 };
-		ctx.restore();
+	
 	}
 }

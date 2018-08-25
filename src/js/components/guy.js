@@ -1,4 +1,9 @@
+import {drawCanvas} from "./animationFPS.js";
+
+
+
 export default class sprite {
+	
 	constructor(args) {
 		
 		
@@ -29,19 +34,19 @@ export default class sprite {
 		
 		
     	if (state.keys.right) {
-    		state.guy.positionX += 5;
+    		state.guy.positionX += 10;
     	}
     	
     	if (state.keys.up) {
-    		state.guy.positionY -= 5;
+    		state.guy.positionY -= 10;
     	}
     	
     	if (state.keys.down) {
-    		state.guy.positionY += 5;   		
+    		state.guy.positionY += 10;   		
     	}
     	
     	if (state.keys.left && (state.guy.positionX > 0)) {
-    		state.guy.positionX -= 5;
+    		state.guy.positionX -= 10;
     	}
     	
     	if (state.keys.space) { 	
@@ -51,8 +56,8 @@ export default class sprite {
     		state.guy.frameIndex = 0;
     	}
     
-    	//ctx.clearRect(0,0, state.screen.width, state.screen.height);
-  
+    	ctx.clearRect(positionX ,positionY, width, height);
+    	drawCanvas(ctx, state);
 		newImage.src = this.image;
 		newImage.position = this.position;
 		newImage.onload = function () {
