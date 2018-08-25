@@ -23,6 +23,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "webpack-dev-server --content-base src --inline --hot",
     "dev": "webpack-dev-server --content-base src --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
