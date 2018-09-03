@@ -1,5 +1,4 @@
-import {drawCanvas} from "./animationFPS.js";
-
+import Bullet from "./bullet"
 
 
 export default class sprite {
@@ -15,6 +14,9 @@ export default class sprite {
 		this.image = args.image;
 		this.positionX = args.positionX;
 		this.positionY = args.positionY;
+		this.updateBullets = args.updateBullets;
+		this.bullets = args.bullets;
+		this.lastShot = 0;
 	
 	}
 		
@@ -30,34 +32,36 @@ export default class sprite {
 		var height = this.height;
 		
 		var newImage = new Image();
-		const ctx = state.context;
+		const ctx = state.context2;
 		
 		
-    	if (state.keys.right) {
-    		state.guy.positionX += 10;
+		
+    	if (state.keys.right && (this.positionX < 1000)) {
+    		this.positionX += 10;
     	}
     	
     	if (state.keys.up) {
-    		state.guy.positionY -= 10;
+    		this.positionY -= 10;
     	}
     	
     	if (state.keys.down) {
-    		state.guy.positionY += 10;   		
+    		this.positionY += 10;   		
     	}
     	
-    	if (state.keys.left && (state.guy.positionX > 0)) {
-    		state.guy.positionX -= 10;
+    	if (state.keys.left && (this.positionX > 0)) {
+    		this.positionX -= 10;
     	}
     	
-    	if (state.keys.space) { 	
-    		state.guy.frameIndex = 1;
-    		console.log(positionX);
+    	if (state.keys.space && Date.now() - this.lastShot > 300) { 	
+    		this.frameIndex = 1;
+    		const bullet = new Bullet({guy:this});
+    		this.bullets(bullet);
+    		this.lastShot = Date.now();
     	} else {
-    		state.guy.frameIndex = 0;
+    		this.frameIndex = 0;
     	}
     
     	ctx.clearRect(positionX ,positionY, width, height);
-    	drawCanvas(ctx, state);
 		newImage.src = this.image;
 		newImage.position = this.position;
 		newImage.onload = function () {
