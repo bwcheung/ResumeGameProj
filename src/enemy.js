@@ -1,27 +1,61 @@
+import Text from "./text"
+
+
+const strings = ["JAVASCRIPT 5/5", "JAVA 5/5", "PYTHON 5/5", "HTML 5/5", "CSS 5/5", "C 4/5", 
+	"C++ 2/5", "C# 3/5", "SQL 4/5", "PHP 2/5"];
+
+const strings2 = ["MOTIVATED!!", "PASSIONATE!", "HANDSOME", "CONSIDERATE", "DEPENDABLE"]
+
 export default class enemy {
 	constructor(args) {
 		this.position = args.position;
 		this.moveDown = args.moveDown;
+		this.texts = args.texts;
+		this.lastShot = 3000;
+		this.lastShot2 = 3000;
 	}
 	
 	render(state) {
 	
 	
 		if (this.moveDown) {
-			this.position += 5;
+			this.position += 3;
 		}
 		
 		if (!this.moveDown) {
-			this.position -= 5;
+			this.position -= 3;
 		}
 		
-
+		if (Date.now() - this.lastShot > 2000) {
+			var x = Math.floor((Math.random() * strings.length) + 0);
+    		const text = new Text({
+    			enemy:this, 
+    			positionX: state.screen.width-200, 
+    			string:strings[x],
+    			colour: "red"
+    		});
+    		this.texts(text);
+    		this.lastShot = Date.now();
+    	} 
+		
+		if (Date.now() - this.lastShot2 > 5500) {
+			var x = Math.floor((Math.random() * strings2.length) + 0);
+    		const text = new Text({
+    			enemy:this, 
+    			positionX: state.screen.width-200, 
+    			string:strings2[x],
+    			colour: "blue"
+    		});
+    		this.texts(text);
+    		this.lastShot2 = Date.now();
+    	} 
+		
+		
 		
 		const context = state.context;
-		context.save();
-		console.log(state.screen.width);
-		context.translate(state.screen.width-700,this.position);
 		
+		context.save();
+		context.translate(state.screen.width-700,this.position);
 		context.beginPath();
 		context.lineWidth=4;
 		context.moveTo(492,71);

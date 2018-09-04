@@ -52,7 +52,7 @@ export default class sprite {
     		this.positionX -= 10;
     	}
     	
-    	if (state.keys.space && Date.now() - this.lastShot > 300) { 	
+    	if ((state.keys.space) && (Date.now() - this.lastShot > 800)) { 	
     		this.frameIndex = 1;
     		const bullet = new Bullet({guy:this});
     		this.bullets(bullet);

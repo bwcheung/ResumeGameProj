@@ -9,9 +9,9 @@ const KEY = {
 		D: 68,
 		W: 87,
 		S: 83,
-		SPACE: 32
+		SPACE: 32,
+		ESC: 27,
 };
-
 
 export default class Layout extends React.Component {
 	constructor() {
@@ -30,13 +30,16 @@ export default class Layout extends React.Component {
 					up: 0,
 					down: 0,
 					space:0,
+					esc: 0,
 				},
 		};
 		this.bullets = [];
 		this.clouds = [];
+		this.texts = [];
 		this.frameIndex = 0;
 		this.guy = null;
 		this.enemy =  null;
+		this.menu = false;
 	}
 	
 	handlekeys(value, e) {
@@ -57,6 +60,9 @@ export default class Layout extends React.Component {
             
         	case KEY.SPACE:
         		keys.space = value; break;
+        		
+        	case KEY.ESC:
+        		keys.esc = value; break;
         }
         
         this.setState({ keys:keys });
@@ -106,8 +112,9 @@ export default class Layout extends React.Component {
 
 	gameLoop() {
 		requestAnimationFrame(() => {this.gameLoop()});
+	
 		const ctx = this.state.context;
-		
+
 		ctx.save();
 		ctx.canvas.width = this.state.screen.width;
 		ctx.canvas.height = this.state.screen.height;
@@ -118,6 +125,11 @@ export default class Layout extends React.Component {
 		ctx.fillStyle = my_gradient;
 		ctx.fillRect(0,0,this.state.screen.width,this.state.screen.height);
 		
+		if (this.state.keys.esc) {
+			this.menu = true;
+		}
+		
+		
 		if (this.clouds.length < 3) {
 			this.createClouds();
 		}
@@ -127,26 +139,42 @@ export default class Layout extends React.Component {
 		} else if (this.enemy.position <= 0) {
 			this.enemy.moveDown = true;
 		}
-		this.enemy.render(this.state);
-		this.checkHit(this.bullets);
-		this.updateBullets(this.bullets);
-		this.updateClouds(this.clouds);
+		this.update();
 		ctx.restore();	
 		  
 	}
 	
-	checkHit(bullets) {
-		for (let x of bullets) {
-			if (x.positionX >= 1200 && x.positionY >= this.enemy.position) {
+	update() {
+		this.enemy.render(this.state);
+		this.updateTexts(this.texts);
+		this.checkHit();
+		this.updateBullets(this.bullets);
+		this.updateClouds(this.clouds);
+	}
+	
+	
+	
+	checkHit() {
+		for (let x of this.bullets) {
+			if ((x.positionX >= this.state.screen.width-200) && (x.positionY >= this.enemy.position)) {
 				x.delete = true;
 			}
+		}
+		for (let x of this.texts) {
+			if ((x.positionX <= this.guy.positionX) && 
+				(x.positionY >= this.guy.positionY-150) &&
+				(x.positionY <= this.guy.positionY-50) &&
+				(x.positionX >= this.guy.positionX-50)) {
+					x.delete = true;
+			}
+			
+			
 		}
 	}
 	
 	
 	createSprite() {
 		
-		// Create sprite
 		this.guy = new sprite({
 			positionX: 20,
 			positionY: 100,
@@ -158,14 +186,13 @@ export default class Layout extends React.Component {
 			ticksPerFrame: 2,
 			bullets: this.addBullet.bind(this),		
 		});
-		//this.setState({guy: guy});
 	}
 	
 	createClouds() {
 		
 		const cloud = new Clouds({
 			positionX: Math.random() * (this.state.screen.width - 1100) + 1100,
-			positionY: Math.random() * (100 - 1) + 1,
+			positionY: Math.random() * (20 - 1) + 1,
 			speed: Math.random() * (5 - 2) + 2,
 		});
 		this.clouds.push(cloud);
@@ -175,7 +202,22 @@ export default class Layout extends React.Component {
 		this.enemy = new enemy({
 			position: 10,
 			moveDown: true,
+			texts: this.addText.bind(this),
 		});
+	}
+	
+	updateTexts(texts) {
+		let index = 0;
+		for (let x of texts) {
+			if (x.delete) {
+				this.texts.splice(index,1);
+				console.log("delete");
+			} else {
+				x.render(this.state);
+				x.positionX = x.positionX - 5;
+			}
+			index++;
+		}
 	}
 	
 	
@@ -194,7 +236,10 @@ export default class Layout extends React.Component {
 	
 	addBullet(bullet) {
 		this.bullets.push(bullet);
-		console.log(this.bullets);
+	}
+	
+	addText(text) {
+		this.texts.push(text);
 	}
 	
 	updateBullets(bullets) {
@@ -211,6 +256,11 @@ export default class Layout extends React.Component {
 	}
 	
 render (){
+	let menuText;
+	if (this.menu) {
+		
+	}
+	
     return (
       <div>
      <canvas ref="canvas" id = "background"

@@ -5,6 +5,7 @@ export default class Text {
 		this.positionX = args.positionX;
 		this.positionY = args.enemy.position;
 		this.string = args.string;
+		this.colour = args.colour;
 	}
 	
 	
@@ -17,8 +18,8 @@ export default class Text {
 		const context = state.context;
 		context.save();
 		
-		context.font = "15pt Calibri";
-		context.fillStyle = "red";
+		context.font = "bold 20pt Calibri";
+		context.fillStyle = this.colour;
 		context.textAlign = "center";
 		context.textBaseline = "middle";
 		

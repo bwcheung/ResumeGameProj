@@ -16,7 +16,7 @@ export default class Bullet {
 		const ctx = state.context;
 		ctx.save();
 		ctx.lineWidth=4;
-		ctx.rect(this.positionX+10,this.positionY, 25,25);
+		ctx.rect(this.positionX+10,this.positionY+10, 25,25);
 		ctx.stroke();
 		ctx.restore();
 			
