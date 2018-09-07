@@ -1,6 +1,7 @@
 import React from 'react';
-import { render } from 'react-dom';
-import style from './style.css';
+import ReactDOM from 'react-dom';
+import './style.css';
 import Layout from "./Layout";
 
-render(<Layout />, document.getElementById('root'));
+ReactDOM.render(<Layout />, document.getElementById('root'));
+

@@ -8,6 +8,7 @@
   right: 0;
   width: 100%;
   height: 100%;
+  pointer-events:none;
   z-index:-1;
 }
 
@@ -20,7 +21,51 @@
   right: 0;
   width: 100%;
   height: 100%;
+  pointer-events:none;
   z-index:1;
 }
 
+div {
+	display: block;
+}
 
+#Instructions {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+#Menu {
+	position: absolute;
+	width: 100%;
+	bottom: 50%;
+}
+
+p.Instructs {
+	text-align: center;
+}
+
+p.Menu {
+	text-align: center;
+}
+
+
+p.End {
+	text-align: center;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 24px;
+	letter-spacing: 4px;
+	word-spacing: 3px;
+	color: #FF0D22;
+	font-weight: 700;
+	text-decoration: none;
+	font-style: italic;
+	font-variant: normal;
+	text-transform: uppercase;
+	text-shadow: 3px 2px black;
+}
+
+button {
+	position: relative;
+	left:50%;
+}

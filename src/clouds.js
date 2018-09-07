@@ -11,8 +11,6 @@ export default class Clouds {
 			this.delete = true;
 		}
 		
-		
-		var newImage = new Image();
 		const ctx = state.context;
 		ctx.save();
 		ctx.translate(this.positionX,this.positionY);

@@ -15,9 +15,13 @@ export default class Bullet {
 		
 		const ctx = state.context;
 		ctx.save();
-		ctx.lineWidth=4;
-		ctx.rect(this.positionX+10,this.positionY+10, 25,25);
+		ctx.beginPath();
+		ctx.arc(this.positionX + 150,this.positionY + 150, 10, 0, 2 * Math.PI, false);
+		ctx.fillStyle = "black";
+		ctx.fill();
+		ctx.lineWidth=5;
 		ctx.stroke();
+		ctx.closePath();
 		ctx.restore();
 			
 	}

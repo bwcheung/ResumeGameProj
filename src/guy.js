@@ -17,6 +17,11 @@ export default class sprite {
 		this.updateBullets = args.updateBullets;
 		this.bullets = args.bullets;
 		this.lastShot = 0;
+		this.velocity = {
+				x: 0,
+				y: 0,
+		}
+		this.gotHit = 0;
 	
 	}
 		
@@ -26,7 +31,6 @@ export default class sprite {
     	var frameIndex = this.frameIndex;
 		var positionX = this.positionX;
 		var positionY = this.positionY;
-		var tf = this.ticksPerFrame;
 		var nf = this.numberOfFrames;
 		var width = this.width;
 		var height = this.height;
@@ -34,36 +38,37 @@ export default class sprite {
 		var newImage = new Image();
 		const ctx = state.context2;
 		
+		ctx.save();
 		
-		
-    	if (state.keys.right && (this.positionX < 1000)) {
-    		this.positionX += 10;
+		if (!state.endGame && state.gameStart) {
+    		if (state.keys.right && (this.positionX < 1000)) {
+        		this.positionX += 10;
+        	}
+        	
+        	if (state.keys.up && (this.positionY > 0)) {
+        		this.positionY -= 10;
+        	}
+        	
+        	if (state.keys.down && (this.positionY < state.screen.height)) {
+        		this.positionY += 10;   		
+        	}
+        	
+        	if (state.keys.left && (this.positionX > 0)) {
+        		this.positionX -= 10;
+        	}
+        	
+        	if ((state.keys.space) && (Date.now() - this.lastShot > 600)) { 	
+        		this.frameIndex = 1;
+        		const bullet = new Bullet({guy:this});
+        		this.bullets(bullet);
+        		this.lastShot = Date.now();
+        	} else {
+        		this.frameIndex = 0;
+        	}
     	}
-    	
-    	if (state.keys.up) {
-    		this.positionY -= 10;
-    	}
-    	
-    	if (state.keys.down) {
-    		this.positionY += 10;   		
-    	}
-    	
-    	if (state.keys.left && (this.positionX > 0)) {
-    		this.positionX -= 10;
-    	}
-    	
-    	if ((state.keys.space) && (Date.now() - this.lastShot > 800)) { 	
-    		this.frameIndex = 1;
-    		const bullet = new Bullet({guy:this});
-    		this.bullets(bullet);
-    		this.lastShot = Date.now();
-    	} else {
-    		this.frameIndex = 0;
-    	}
-    
     	ctx.clearRect(positionX ,positionY, width, height);
+    	
 		newImage.src = this.image;
-		newImage.position = this.position;
 		newImage.onload = function () {
 			  ctx.drawImage(
 						newImage,
@@ -77,5 +82,6 @@ export default class sprite {
 					    height);
 			  
 		 };
+		 ctx.restore();
 	}      
 }

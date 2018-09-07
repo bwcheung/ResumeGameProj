@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDom from "react-dom";
+
 import Clouds from "./clouds";
 import sprite from "./guy";
 import enemy from "./enemy";
@@ -24,6 +24,8 @@ export default class Layout extends React.Component {
 				},
 				context: null,
 				context2: null,
+				gameStart: false,
+				endGame: false,
 				keys: {
 					left: 0,
 					right: 0,
@@ -39,7 +41,7 @@ export default class Layout extends React.Component {
 		this.frameIndex = 0;
 		this.guy = null;
 		this.enemy =  null;
-		this.menu = false;
+		this.menu = true;
 	}
 	
 	handlekeys(value, e) {
@@ -63,10 +65,14 @@ export default class Layout extends React.Component {
         		
         	case KEY.ESC:
         		keys.esc = value; break;
+        		
+        	 default:
+                keys = String.fromCharCode(e.keyCode);
         }
         
         this.setState({ keys:keys });
 	}
+
 	
 	componentDidMount() {
 		window.addEventListener('keyup', this.handlekeys.bind(this, false));
@@ -111,7 +117,13 @@ export default class Layout extends React.Component {
 	}
 
 	gameLoop() {
-		requestAnimationFrame(() => {this.gameLoop()});
+		if (this.state.gameStart) {
+			requestAnimationFrame(() => {this.gameLoop()});
+		}
+		
+		if (this.enemy.health <= 0) {
+			this.setState({endGame: true});
+		}
 	
 		const ctx = this.state.context;
 
@@ -134,7 +146,7 @@ export default class Layout extends React.Component {
 			this.createClouds();
 		}
 		
-		if (this.enemy.position >= 400) {
+		if (this.enemy.position >= this.state.screen.height-200) {
 			this.enemy.moveDown = false;
 		} else if (this.enemy.position <= 0) {
 			this.enemy.moveDown = true;
@@ -156,19 +168,22 @@ export default class Layout extends React.Component {
 	
 	checkHit() {
 		for (let x of this.bullets) {
-			if ((x.positionX >= this.state.screen.width-200) && (x.positionY >= this.enemy.position)) {
+			if ((x.positionX >= this.state.screen.width-400) &&
+				(x.positionX <= this.state.screen.width-300) &&
+				(x.positionY >= this.enemy.position-100) && 
+				(x.positionY <= this.enemy.position+110)) {
 				x.delete = true;
+				this.enemy.health -= 1;
 			}
 		}
 		for (let x of this.texts) {
-			if ((x.positionX <= this.guy.positionX) && 
-				(x.positionY >= this.guy.positionY-150) &&
-				(x.positionY <= this.guy.positionY-50) &&
+			if ((x.positionX <= this.guy.positionX+200) && 
+				(x.positionY >= this.guy.positionY-90) &&
+				(x.positionY <= this.guy.positionY+30) &&
 				(x.positionX >= this.guy.positionX-50)) {
 					x.delete = true;
+					this.guy.gotHit += 1;
 			}
-			
-			
 		}
 	}
 	
@@ -176,7 +191,7 @@ export default class Layout extends React.Component {
 	createSprite() {
 		
 		this.guy = new sprite({
-			positionX: 20,
+			positionX: 100,
 			positionY: 100,
 			frameIndex: 0,
 			width: 520,
@@ -203,6 +218,7 @@ export default class Layout extends React.Component {
 			position: 10,
 			moveDown: true,
 			texts: this.addText.bind(this),
+			health: 20,
 		});
 	}
 	
@@ -211,7 +227,6 @@ export default class Layout extends React.Component {
 		for (let x of texts) {
 			if (x.delete) {
 				this.texts.splice(index,1);
-				console.log("delete");
 			} else {
 				x.render(this.state);
 				x.positionX = x.positionX - 5;
@@ -255,10 +270,31 @@ export default class Layout extends React.Component {
 		}
 	}
 	
+	startGame () {
+		this.menu = false;
+		this.setState({gameStart: true}, () => {
+			this.gameLoop();
+		});
+	}
+	
 render (){
 	let menuText;
+	let endGame;
 	if (this.menu) {
-		
+		menuText = (<div id = "Menu">
+					<button onClick = {this.startGame.bind(this)}>
+					Start Game!!
+					</button>
+					<p className = "Menu"> Hi! My name is Brandon Cheung and welcome to my interactive resume!</p>
+	     			</div>)
+	}
+	
+	if (this.state.endGame) {
+		endGame = (<div id = "Menu">
+				   <p className = "End">Congratulations!! You have defeated my Resume. Your prize is the opportunity 
+				   	to hire the best person ever!!  </p>
+				   <p className = "End">You got hit {this.guy.gotHit} times. Try to get hit less next time!</p>
+				   </div>)
 	}
 	
     return (
@@ -271,6 +307,12 @@ render (){
 	 width = {this.state.screen.width * this.state.screen.ratio}
  	 height = {this.state.screen.height * this.state.screen.ratio}
 	 />
+	 
+     {menuText}
+     {endGame}
+     <div id = "Instructions">
+     		<p className = "Instructs"> Use [W][A][S][D] to move and [SPACE] to shoot </p>
+     </div>
       </div>
     );
    

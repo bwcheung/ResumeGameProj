@@ -1,5 +1,3 @@
-
-
 export default class Text {
 	constructor(args) {
 		this.positionX = args.positionX;
@@ -18,7 +16,7 @@ export default class Text {
 		const context = state.context;
 		context.save();
 		
-		context.font = "bold 20pt Calibri";
+		context.font = "bold 30pt Calibri";
 		context.fillStyle = this.colour;
 		context.textAlign = "center";
 		context.textBaseline = "middle";
