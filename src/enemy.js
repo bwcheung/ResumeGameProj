@@ -61,8 +61,8 @@ export default class enemy {
 		context.textAlign = "center";
 		context.textBaseline = "middle";
 		
-		context.fillText("resume", 520, 90);
-		context.fillText("HP" + this.health, 515, 200);
+		context.fillText("Resume", 520, 90);
+		context.fillText("HP " + this.health, 515, 200);
 		context.beginPath();
 		context.lineWidth=4;
 		context.moveTo(492,71);

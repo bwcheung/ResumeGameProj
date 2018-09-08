@@ -46,6 +46,16 @@ p.Instructs {
 }
 
 p.Menu {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 25px;
+	letter-spacing: 4.8px;
+	word-spacing: 0.6px;
+	color: #010000;
+	font-weight: 700;
+	text-decoration: none;
+	font-style: normal;
+	font-variant: small-caps;
+	text-transform: capitalize;
 	text-align: center;
 }
 
@@ -65,7 +75,50 @@ p.End {
 	text-shadow: 3px 2px black;
 }
 
-button {
+
+Button {
+	-moz-box-shadow: 0px 10px 14px -7px #276873;
+	-webkit-box-shadow: 0px 10px 14px -7px #276873;
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #b35959), color-stop(1, #407599));
+	background:-moz-linear-gradient(top, #b35959 5%, #407599 100%);
+	background:-webkit-linear-gradient(top, #b35959 5%, #407599 100%);
+	background:-o-linear-gradient(top, #b35959 5%, #407599 100%);
+	background:-ms-linear-gradient(top, #b35959 5%, #407599 100%);
+	background:linear-gradient(to bottom, #b35959 5%, #407599 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b35959', endColorstr='#407599',GradientType=0);
+	background-color:#b35959;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:13px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
 	position: relative;
-	left:50%;
+	left:45%;
 }
+Button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #407599), color-stop(1, #b35959));
+	background:-moz-linear-gradient(top, #407599 5%, #b35959 100%);
+	background:-webkit-linear-gradient(top, #407599 5%, #b35959 100%);
+	background:-o-linear-gradient(top, #407599 5%, #b35959 100%);
+	background:-ms-linear-gradient(top, #407599 5%, #b35959 100%);
+	background:linear-gradient(to bottom, #407599 5%, #b35959 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#407599', endColorstr='#b35959',GradientType=0);
+	background-color:#407599;
+}
+Button:active {
+	position:relative;
+	top:1px;
+}
+
+
+
+
+

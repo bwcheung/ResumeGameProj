@@ -1,3 +1,6 @@
+//Cloud taken from https://www.html5canvastutorials.com/advanced/html5-canvas-save-drawing-as-an-image/
+
+
 export default class Clouds {
 	constructor(args) {
 		this.positionX = args.positionX;

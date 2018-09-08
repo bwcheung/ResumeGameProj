@@ -142,7 +142,7 @@ export default class Layout extends React.Component {
 		}
 		
 		
-		if (this.clouds.length < 3) {
+		if (this.clouds.length < 4) {
 			this.createClouds();
 		}
 		
@@ -176,13 +176,15 @@ export default class Layout extends React.Component {
 				this.enemy.health -= 1;
 			}
 		}
-		for (let x of this.texts) {
-			if ((x.positionX <= this.guy.positionX+200) && 
-				(x.positionY >= this.guy.positionY-90) &&
-				(x.positionY <= this.guy.positionY+30) &&
-				(x.positionX >= this.guy.positionX-50)) {
-					x.delete = true;
-					this.guy.gotHit += 1;
+		if (!this.state.endGame) {
+			for (let x of this.texts) {
+				if ((x.positionX <= this.guy.positionX+200) && 
+					(x.positionY >= this.guy.positionY-90) &&
+					(x.positionY <= this.guy.positionY+30) &&
+					(x.positionX >= this.guy.positionX-50)) {
+						x.delete = true;
+						this.guy.gotHit += 1;
+				}
 			}
 		}
 	}
@@ -204,9 +206,9 @@ export default class Layout extends React.Component {
 	}
 	
 	createClouds() {
-		
+		var min = this.state.screen.width-300
 		const cloud = new Clouds({
-			positionX: Math.random() * (this.state.screen.width - 1100) + 1100,
+			positionX: Math.random() * (this.state.screen.width - min) + min,
 			positionY: Math.random() * (20 - 1) + 1,
 			speed: Math.random() * (5 - 2) + 2,
 		});
@@ -282,10 +284,11 @@ render (){
 	let endGame;
 	if (this.menu) {
 		menuText = (<div id = "Menu">
-					<button onClick = {this.startGame.bind(this)}>
-					Start Game!!
-					</button>
+					<button onClick = {this.startGame.bind(this)}>Start Game!!</button>
 					<p className = "Menu"> Hi! My name is Brandon Cheung and welcome to my interactive resume!</p>
+					<p className = "Menu"> Visit my 
+					<a href="https://github.com/bwcheung/ResumeGameProj"target="_blank" rel="noopener noreferrer">github</a> 
+					for more information.</p>
 	     			</div>)
 	}
 	
