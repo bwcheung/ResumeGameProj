@@ -9,7 +9,7 @@ Email me at bwcheung8@gmail.com.
 (Warning may run differently on local sever)
 1. npm install
 2. npm start
-3. Go to localhost://8080
+3. Go to localhost:8080
 
 or
 

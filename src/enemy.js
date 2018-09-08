@@ -2,9 +2,10 @@ import Text from "./text"
 
 
 const strings = ["JAVASCRIPT 5/5", "JAVA 5/5", "PYTHON 5/5", "HTML 5/5", "CSS 5/5", "C 4/5", 
-	"C++ 2/5", "C# 3/5", "SQL 4/5", "PHP 2/5", "REACT? JUST LOOK AT THIS APP!"];
+	"C++ 2/5", "C# 2/5", "SQL 4/5", "PHP 2/5", "REACT? JUST LOOK AT THIS APP!"];
 
-const strings2 = ["MOTIVATED!!", "PASSIONATE!", "HANDSOME", "CONSIDERATE", "DEPENDABLE", "HARD WORKER"];
+const strings2 = ["MOTIVATED!!", "PASSIONATE!", "HANDSOME", "CONSIDERATE", "DEPENDABLE", "HARD WORKER", "FAST LEARNER",
+				 "CRITICAL THINKING 5/5", "PROBLEM SOLVING 5/5"];
 
 export default class enemy {
 	constructor(args) {
@@ -26,6 +27,7 @@ export default class enemy {
 		if (!this.moveDown) {
 			this.position -= 3;
 		}
+		
 		if (state.gameStart && !state.endGame) {
 			if (Date.now() - this.lastShot > 1000) {
 				x = Math.floor((Math.random() * strings.length) + 0);
@@ -37,7 +39,7 @@ export default class enemy {
 	    		});
 	    		this.texts(text);
 	    		this.lastShot = Date.now();
-	    	} 
+	    	}
 			
 			if (Date.now() - this.lastShot2 > 3245) {
 				x = Math.floor((Math.random() * strings2.length) + 0);

@@ -111,7 +111,6 @@ export default class Layout extends React.Component {
 	  }
 	
 	initialize() {
-		
 		this.createSprite();
 		this.createEnemy();
 	}
@@ -126,12 +125,13 @@ export default class Layout extends React.Component {
 		}
 	
 		const ctx = this.state.context;
-
+		
 		ctx.save();
 		ctx.canvas.width = this.state.screen.width;
 		ctx.canvas.height = this.state.screen.height;
+		
 		const my_gradient=ctx.createLinearGradient(150,0,150,this.state.screen.height);
-
+		
 		my_gradient.addColorStop(0.000, 'rgba(5, 121, 175, 1.000)');
 		my_gradient.addColorStop(0.554, 'rgba(70, 207, 244, 1.000)');
 		ctx.fillStyle = my_gradient;
@@ -151,6 +151,7 @@ export default class Layout extends React.Component {
 		} else if (this.enemy.position <= 0) {
 			this.enemy.moveDown = true;
 		}
+		
 		this.update();
 		ctx.restore();	
 		  
@@ -191,7 +192,6 @@ export default class Layout extends React.Component {
 	
 	
 	createSprite() {
-		
 		this.guy = new sprite({
 			positionX: 100,
 			positionY: 100,
@@ -279,45 +279,43 @@ export default class Layout extends React.Component {
 		});
 	}
 	
-render (){
-	let menuText;
-	let endGame;
-	if (this.menu) {
-		menuText = (<div id = "Menu">
-					<button onClick = {this.startGame.bind(this)}>Start Game!!</button>
-					<p className = "Menu"> Hi! My name is Brandon Cheung and welcome to my interactive resume!</p>
-					<p className = "Menu"> Visit my 
-					<a href="https://github.com/bwcheung/ResumeGameProj"target="_blank" rel="noopener noreferrer">github</a> 
-					for more information.</p>
-	     			</div>)
+	render (){
+		let menuText;
+		let endGame;
+		if (this.menu) {
+			menuText = (<div id = "Menu">
+						<button onClick = {this.startGame.bind(this)}>Start Game!!</button>
+						<p className = "Menu"> Hi! My name is Brandon Cheung and welcome to my interactive resume!</p>
+						<p className = "Menu"> Visit my 
+						<a href="https://github.com/bwcheung/ResumeGameProj"target="_blank" rel="noopener noreferrer">github</a> 
+						for more information.</p>
+		     			</div>)
+		}
+		
+		if (this.state.endGame) {
+			endGame = (<div id = "Menu">
+					   <p className = "End">Congratulations!! You have defeated my Resume. Your prize is the opportunity 
+					   	to hire the best person ever!!  </p>
+					   <p className = "End">You got hit {this.guy.gotHit} times. Try to get hit less next time!</p>
+					   </div>)
+		}
+		
+	    return (
+	     <div>
+	     	<canvas ref="canvas" id = "background"
+	     		width = {this.state.screen.width * this.state.screen.ratio}
+	     		height = {this.state.screen.height * this.state.screen.ratio} 	 
+	    	 	/>
+	     	<canvas ref = "canvas2" id = "player"
+	     		width = {this.state.screen.width * this.state.screen.ratio}
+	 	 		height = {this.state.screen.height * this.state.screen.ratio}
+		 		/>
+	     	{menuText}
+	     	{endGame}
+	     	<div id = "Instructions">
+	     		<p className = "Instructs"> Use [W][A][S][D] to move and [SPACE] to shoot </p>
+	     	</div>
+	      </div>
+	    );
 	}
-	
-	if (this.state.endGame) {
-		endGame = (<div id = "Menu">
-				   <p className = "End">Congratulations!! You have defeated my Resume. Your prize is the opportunity 
-				   	to hire the best person ever!!  </p>
-				   <p className = "End">You got hit {this.guy.gotHit} times. Try to get hit less next time!</p>
-				   </div>)
-	}
-	
-    return (
-      <div>
-     <canvas ref="canvas" id = "background"
-    	 width = {this.state.screen.width * this.state.screen.ratio}
-     	 height = {this.state.screen.height * this.state.screen.ratio} 	 
-    	 />
-     <canvas ref = "canvas2" id = "player"
-	 width = {this.state.screen.width * this.state.screen.ratio}
- 	 height = {this.state.screen.height * this.state.screen.ratio}
-	 />
-	 
-     {menuText}
-     {endGame}
-     <div id = "Instructions">
-     		<p className = "Instructs"> Use [W][A][S][D] to move and [SPACE] to shoot </p>
-     </div>
-      </div>
-    );
-   
-}
 }
