@@ -8,7 +8,6 @@ export default class sprite {
 	
 	constructor(args) {
 		
-		
 		this.ticksPerFrame = args.ticksPerFrame || 0;
 		this.numberOfFrames = args.numberOfFrames || 1;
 		this.frameIndex = args.frameIndex;
@@ -20,12 +19,7 @@ export default class sprite {
 		this.updateBullets = args.updateBullets;
 		this.bullets = args.bullets;
 		this.lastShot = 0;
-		this.velocity = {
-				x: 0,
-				y: 0,
-		}
 		this.gotHit = 0;
-	
 	}
 		
         
@@ -42,9 +36,10 @@ export default class sprite {
 		const ctx = state.context2;
 		
 		ctx.save();
+		ctx.clearRect(positionX ,positionY, width, height);
 		
 		if (!state.endGame && state.gameStart) {
-    		if (state.keys.right && (this.positionX < 1000)) {
+    		if (state.keys.right && (this.positionX < state.screen.width / 2)) {
         		this.positionX += 10;
         	}
         	
@@ -69,7 +64,7 @@ export default class sprite {
         		this.frameIndex = 0;
         	}
     	}
-    	ctx.clearRect(positionX ,positionY, width, height);
+    	//ctx.clearRect(positionX ,positionY, width, height);
     	
 		newImage.src = this.image;
 		newImage.onload = function () {

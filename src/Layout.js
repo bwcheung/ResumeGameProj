@@ -20,7 +20,6 @@ export default class Layout extends React.Component {
 				screen: {
 					width: window.innerWidth,
 					height: window.innerHeight,
-					ratio: window.devicePixelRatio || 1
 				},
 				context: null,
 				context2: null,
@@ -77,15 +76,15 @@ export default class Layout extends React.Component {
 	componentDidMount() {
 		window.addEventListener('keyup', this.handlekeys.bind(this, false));
 		window.addEventListener('keydown', this.handlekeys.bind(this, true));
-		 window.addEventListener('resize',  this.handleResize.bind(this, false));
+		window.addEventListener('resize',  this.handleResize.bind(this, false));
 		const ctx = this.refs.canvas.getContext("2d");
 		const ctx2 = this.refs.canvas2.getContext("2d");
-			
+		
+		this.initialize();	
 		this.setState({context2:ctx2});
 		this.setState({context: ctx}, () => {
 			this.gameLoop();
 		});
-		this.initialize();
 	}
 	
 	
@@ -105,14 +104,31 @@ export default class Layout extends React.Component {
 	      screen : {
 	        width: window.innerWidth,
 	        height: window.innerHeight,
-	        ratio: window.devicePixelRatio || 1,
-	      }
+	      },
 	    });
 	  }
 	
 	initialize() {
-		this.createSprite();
-		this.createEnemy();
+		
+		this.guy = new sprite({
+			positionX: 0,
+			positionY: 0,
+			frameIndex: 0,
+			width: 520,
+			height: 300,
+			image: "https://raw.githubusercontent.com/bwcheung/ResumeGameProj/master/src/images/Piskel.png",
+			numberOfFrames: 2,
+			ticksPerFrame: 2,
+			bullets: this.addBullet.bind(this),
+		});
+		
+		this.enemy = new enemy({
+			position: 10,
+			moveDown: true,
+			texts: this.addText.bind(this),
+			health: 15,
+		});
+		
 	}
 
 	gameLoop() {
@@ -182,27 +198,12 @@ export default class Layout extends React.Component {
 				if ((x.positionX <= this.guy.positionX+200) && 
 					(x.positionY >= this.guy.positionY-90) &&
 					(x.positionY <= this.guy.positionY+30) &&
-					(x.positionX >= this.guy.positionX-50)) {
+					(x.positionX >= this.guy.positionX-40)) {
 						x.delete = true;
 						this.guy.gotHit += 1;
 				}
 			}
 		}
-	}
-	
-	
-	createSprite() {
-		this.guy = new sprite({
-			positionX: 100,
-			positionY: 100,
-			frameIndex: 0,
-			width: 520,
-			height: 300,
-			image: "https://raw.githubusercontent.com/bwcheung/ResumeGameProj/master/src/images/Piskel.png",
-			numberOfFrames: 2,
-			ticksPerFrame: 2,
-			bullets: this.addBullet.bind(this),		
-		});
 	}
 	
 	createClouds() {
@@ -213,15 +214,6 @@ export default class Layout extends React.Component {
 			speed: Math.random() * (5 - 2) + 2,
 		});
 		this.clouds.push(cloud);
-	}
-	
-	createEnemy() {
-		this.enemy = new enemy({
-			position: 10,
-			moveDown: true,
-			texts: this.addText.bind(this),
-			health: 20,
-		});
 	}
 	
 	updateTexts(texts) {
@@ -266,7 +258,7 @@ export default class Layout extends React.Component {
 				this.bullets.splice(index,1);
 			} else {
 				x.render(this.state);
-				x.positionX = x.positionX + 5;
+				x.positionX = x.positionX + 10;
 			}
 			index++;
 		}
@@ -284,11 +276,11 @@ export default class Layout extends React.Component {
 		let endGame;
 		if (this.menu) {
 			menuText = (<div id = "Menu">
-						<button onClick = {this.startGame.bind(this)}>Start Game!!</button>
 						<p className = "Menu"> Hi! My name is Brandon Cheung and welcome to my interactive resume!</p>
 						<p className = "Menu"> Visit my 
 						<a href="https://github.com/bwcheung/ResumeGameProj"target="_blank" rel="noopener noreferrer">github</a> 
 						for more information.</p>
+						<button onClick = {this.startGame.bind(this)}>Start Game!!</button>
 		     			</div>)
 		}
 		
@@ -303,12 +295,12 @@ export default class Layout extends React.Component {
 	    return (
 	     <div>
 	     	<canvas ref="canvas" id = "background"
-	     		width = {this.state.screen.width * this.state.screen.ratio}
-	     		height = {this.state.screen.height * this.state.screen.ratio} 	 
+	     		width = {this.state.screen.width }
+	     		height = {this.state.screen.height } 	 
 	    	 	/>
 	     	<canvas ref = "canvas2" id = "player"
-	     		width = {this.state.screen.width * this.state.screen.ratio}
-	 	 		height = {this.state.screen.height * this.state.screen.ratio}
+	     		width = {this.state.screen.width }
+	 	 		height = {this.state.screen.height }
 		 		/>
 	     	{menuText}
 	     	{endGame}
