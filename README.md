@@ -14,3 +14,11 @@ Email me at bwcheung8@gmail.com.
 or
 
 Visit https://bwcheung.herokuapp.com/
+
+# How to play
+
+[W] [A] [S] [D] - Move
+
+[SPACE] - shoot
+
+Dodge incoming texts and shoot my resume!
