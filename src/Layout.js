@@ -37,7 +37,6 @@ export default class Layout extends React.Component {
 		this.bullets = [];
 		this.clouds = [];
 		this.texts = [];
-		this.frameIndex = 0;
 		this.guy = null;
 		this.enemy =  null;
 		this.menu = true;
