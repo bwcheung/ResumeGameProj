@@ -6,7 +6,7 @@ to create, so I there may be problems with this one, but I am proud of what I ha
 Email me at bwcheung8@gmail.com.
 
 # How to run 
-(Warning may run differently on local sever)
+(Warning may run differently on local server)
 1. npm install
 2. npm start
 3. Go to localhost:8080
