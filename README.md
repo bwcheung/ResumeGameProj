@@ -6,7 +6,8 @@ to create, so I there may be problems with this one, but I am proud of what I ha
 Email me at bwcheung8@gmail.com.
 
 # How to run 
-Visit https://bwcheung.herokuapp.com/ (Use FireFox or Chrome browser)
+Visit https://bwcheung.herokuapp.com/ 
+(Use FireFox or Chrome browser)
 
 
 or
