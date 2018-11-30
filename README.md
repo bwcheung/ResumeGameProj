@@ -5,6 +5,10 @@ that I hope showcases my technical and personal skills to any potential employer
 to create, so there may be problems with this one, but I am proud of what I have created. Any feedback is welcome.
 Email me at bwcheung8@gmail.com.
 
+
+# UPDATE
+Check out the extended version of my online resume that includes this game. https://bwcheungv2.herokuapp.com/
+
 # How to run 
 Visit https://bwcheung.herokuapp.com/
 
