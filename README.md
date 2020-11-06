@@ -7,7 +7,7 @@ Email me at bwcheung8@gmail.com.
 
 
 # UPDATE
-Check out the extended version of my online resume that includes this game. https://bwcheungv2.herokuapp.com/
+Check out the extended version of my online resume that includes this game. https://bwcheung.herokuapp.com/
 
 # How to run 
 Visit https://bwcheung.herokuapp.com/
