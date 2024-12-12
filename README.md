@@ -7,12 +7,10 @@ Email me at bwcheung8@gmail.com.
 
 
 # UPDATE
-Check out the extended version of my online resume that includes this game. https://bwcheung.herokuapp.com/
-
-Edit: Currently out of date, and will be updated and working later.
+Check out the extended version of my online resume that includes this game. https://react-resume-v5uj.onrender.com
 
 # How to run 
-Visit https://bwcheung.herokuapp.com/
+Visit https://react-resume-v5uj.onrender.com/game
 
 (Use FireFox or Chrome browser)
 
